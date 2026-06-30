@@ -248,6 +248,12 @@ OpenAI-with-Java/
 
 ---
 
+### Git Repo Links
+For the Spring Boot microservice that bridges natural language with API calls using OpenAI's GPT models.[User Prmpt to API Service](https://github.com/DEEKSHITHA-K/user-prompt-to-api-svc)
+
+For the Spring Boot microservice providing REST APIs for transaction data queries [Transaction Service](https://github.com/DEEKSHITHA-K/transaction-svc)
+
+
 ## 🔌 Integration Flow (Detailed)
 
 ### Step-by-Step Flow: "Show me my highest transaction"
@@ -462,9 +468,6 @@ server.port=8081
 
 ## 📚 Additional Resources
 
-### Documentation Files
-- [`transaction-svc-master/README.md`](./transaction-svc-master/README.md) - Transaction Service Details
-- [`user-prompt-to-api-svc-main/README.md`](./user-prompt-to-api-svc-main/README.md) - LLM Gateway Details
 
 ### External Links
 - [Spring Boot Documentation](https://spring.io/projects/spring-boot)
