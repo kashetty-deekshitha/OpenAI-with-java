@@ -497,57 +497,6 @@ This project demonstrates:
 
 ---
 
-## 🚧 Future Enhancements
-
-### Phase 2: Improvements
-- [ ] Add authentication & authorization (Spring Security)
-- [ ] Implement transaction creation/update endpoints (POST, PUT, DELETE)
-- [ ] Switch to persistent database (PostgreSQL, MySQL)
-- [ ] Add API documentation (Swagger/OpenAPI)
-- [ ] Implement request/response logging
-- [ ] Add comprehensive unit & integration tests
-- [ ] Containerize with Docker (docker-compose setup)
-- [ ] Add caching (Redis)
-- [ ] Implement transaction pagination
-- [ ] Add advanced filtering capabilities
-
-### Phase 3: Advanced Features
-- [ ] Support more LLM providers (Anthropic, Google PaLM)
-- [ ] Implement conversation history & context
-- [ ] Add transaction analytics endpoints
-- [ ] Support financial metrics calculations
-- [ ] Multi-user support with proper authorization
-- [ ] Real-time transaction notifications
-- [ ] Transaction categorization using ML
-
----
-
-## 📄 License
-
-This project is part of a learning initiative. Feel free to use it for educational purposes.
-
----
-
-## 🤝 Contributing
-
-Suggestions and improvements are welcome! Consider:
-- Adding more allowed API endpoints
-- Improving LLM prompt engineering
-- Adding error handling & validation
-- Creating comprehensive tests
-- Enhancing documentation
-
----
-
-## 📞 Support
-
-For issues or questions:
-1. Check the individual module READMEs
-2. Review Spring Boot and OpenAI documentation
-3. Examine console logs for error messages
-4. Verify service ports and configurations
-
----
 
 ## 🎉 Quick Reference Cheatsheet
 
