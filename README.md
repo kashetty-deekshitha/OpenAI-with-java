@@ -101,7 +101,7 @@ OpenAI-with-Java/
 ### Step 1: Start Transaction Service
 
 ```bash
-cd transaction-svc-master
+cd transaction-svc
 mvn clean install
 mvn spring-boot:run
 ```
@@ -242,43 +242,6 @@ The LLM automatically maps these to the appropriate API endpoints.
 
 ---
 
-## 🔧 Configuration
-
-### transaction-svc-master (Port 8081)
-
-```properties
-# Server
-server.port=8081
-
-# H2 Database
-spring.datasource.url=jdbc:h2:mem:txdb
-spring.datasource.driverClassName=org.h2.Driver
-spring.datasource.username=sa
-spring.datasource.password=
-
-# JPA/Hibernate
-spring.jpa.hibernate.ddl-auto=create
-spring.jpa.show-sql=true
-
-# H2 Console
-spring.h2.console.enabled=true
-```
-
-**H2 Web Console:** http://localhost:8081/h2-console
-
-### user-prompt-to-api-svc-main (Port 8080)
-
-```properties
-# Server
-server.port=8080
-
-# OpenAI Integration
-spring.ai.openai.api-key=YOUR_OPENAI_API_KEY
-spring.ai.openai.chat.options.model=gpt-4o-mini
-```
-
----
-
 ## 🧠 LLM Constraints
 
 The LLMService enforces strict API constraints in the system prompt:
@@ -297,95 +260,6 @@ This prevents the LLM from generating unauthorized API calls.
 
 ---
 
-## 🧪 Testing
-
-### Using cURL
-
-**Test Transaction Service:**
-```bash
-curl "http://localhost:8081/transactions/last5?userId=user123"
-curl "http://localhost:8081/transactions/highest?userId=user123"
-```
-
-**Test LLM Gateway:**
-```bash
-curl -X POST http://localhost:8080/nl/ask \
-  -H "Content-Type: text/plain" \
-  -d "What are my last 5 transactions?"
-```
-
-### Using Postman
-
-**Collection Setup:**
-
-1. **Transaction Service - Last 5**
-    - Method: GET
-    - URL: `http://localhost:8081/transactions/last5?userId=user123`
-
-2. **Transaction Service - Highest**
-    - Method: GET
-    - URL: `http://localhost:8081/transactions/highest?userId=user123`
-
-3. **LLM Gateway**
-    - Method: POST
-    - URL: `http://localhost:8080/nl/ask`
-    - Headers: `Content-Type: text/plain`
-    - Body (raw): `Show me my last 5 transactions`
-
----
-
-## 📊 Technology Stack
-
-| Component | Technology | Version |
-|-----------|-----------|---------|
-| Language | Java | 17 |
-| Framework | Spring Boot | 4.0.5 |
-| AI Integration | Spring AI + OpenAI | 2.0.0-M3 / GPT-4o-mini |
-| Database | H2 | In-memory |
-| ORM | Spring Data JPA | Native |
-| JSON Processing | Jackson | Native |
-| Boilerplate Reduction | Lombok | Native |
-| Build Tool | Maven | 3.6+ |
-
----
-
-## 🔍 Troubleshooting
-
-### Port Already in Use
-
-**Transaction Service:**
-```properties
-# Edit transaction-svc-master/src/main/resources/application.properties
-server.port=8082
-```
-
-**LLM Gateway:**
-```properties
-# Edit user-prompt-to-api-svc-main/src/main/resources/application.properties
-server.port=8081
-```
-
-### OpenAI API Key Issues
-
-1. Verify key is set in `application.properties`
-2. Check key has API access enabled at https://platform.openai.com
-3. Monitor usage to avoid rate limits
-4. Ensure account has credits
-
-### H2 Database Not Showing Data
-
-- H2 is in-memory; data is recreated on restart
-- To persist data: Change URL to `jdbc:h2:~/transaction-svc-data`
-- Use PostgreSQL/MySQL for production environments
-
-### LLM Gateway Returns Errors
-
-1. Verify transaction-svc-master is running on port 8081
-2. Validate OpenAI API key
-3. Check console logs for LLM response details
-4. Verify network connectivity to `api.openai.com`
-
----
 
 ## 📚 Resources
 
@@ -397,46 +271,4 @@ server.port=8081
 
 ---
 
-## 🎓 Learning Objectives
 
-This project demonstrates:
-
-✅ **Microservices Architecture** - Multiple independent services communicating via REST  
-✅ **Spring Boot Fundamentals** - Building modern Java applications  
-✅ **Spring Data JPA** - Object-relational mapping and queries  
-✅ **OpenAI Integration** - Calling LLM APIs from Java  
-✅ **API Orchestration** - Chaining multiple API calls  
-✅ **Natural Language Processing** - Converting NL to structured requests  
-✅ **RESTful Design** - Building and consuming REST APIs  
-✅ **In-Memory Databases** - Using H2 for development
-
----
-
-## 🎉 Quick Reference Cheatsheet
-
-```bash
-# Terminal 1: Start Transaction Service
-cd transaction-svc-master
-mvn spring-boot:run
-# Runs on http://localhost:8081
-
-# Terminal 2: Start LLM Gateway
-cd user-prompt-to-api-svc-main
-mvn spring-boot:run
-# Runs on http://localhost:8080
-
-# Test Transaction Service
-curl "http://localhost:8081/transactions/last5?userId=user123"
-curl "http://localhost:8081/transactions/highest?userId=user123"
-
-# Test LLM Gateway
-curl -X POST http://localhost:8080/nl/ask \
-  -H "Content-Type: text/plain" \
-  -d "Show me my last 5 transactions"
-
-# Access H2 Consoles
-# Transaction DB: http://localhost:8081/h2-console
-# LLM Gateway DB: http://localhost:8080/h2-console (optional)
-```
-
----
