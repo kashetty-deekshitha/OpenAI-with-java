@@ -1,6 +1,6 @@
 # OpenAI-with-Java
 
-A comprehensive learning project demonstrating how to integrate OpenAI's GPT models with Java microservices using Spring Boot and Spring AI. This project showcases a complete end-to-end workflow: from natural language queries to API execution with backend data services.
+A comprehensive learning project demonstrating how to integrate OpenAI's GPT models with Java microservices using Spring Boot and Spring AI. This project showcases a complete end-to-end workflow: converting plain English questions into structured API calls.
 
 ## 📋 Project Overview
 
@@ -53,7 +53,7 @@ HTTP GET /transactions/last5?userId=123
 │ │  - /last5 - Get 5 most recent transactions             ││
 │ │  - /highest - Get transaction with highest amount      ││
 │ └──────────────────────┬─────────────────────────────────┘│
-│ ┌──────────────────────▼─────────────────────────────────┐│
+│ ┌──────────────────────▼───────────────��─────────────────┐│
 │ │ TransactionService                                      ││
 │ │  - Business logic layer                                ││
 │ └──────────────────────┬─────────────────────────────────┘│
@@ -71,6 +71,7 @@ HTTP GET /transactions/last5?userId=123
 ## 📦 Modules
 
 ### 1. **transaction-svc** (Data Service)
+
 A Spring Boot microservice providing REST APIs for transaction data queries.
 
 **Key Features:**
@@ -83,15 +84,14 @@ A Spring Boot microservice providing REST APIs for transaction data queries.
 - `GET /transactions/last5?userId={userId}` - Retrieve 5 most recent transactions
 - `GET /transactions/highest?userId={userId}` - Retrieve highest amount transaction
 
-**Technologies:** Java 17, Spring Boot 4.0.5, Spring Data JPA, H2, Lombok
-
-**Port:** 8081
-
-[Transaction Service Github Repo Link](https://github.com/DEEKSHITHA-K/transaction-svc)
+**Technologies:** Java 17, Spring Boot 4.0.5, Spring Data JPA, H2, Lombok  
+**Port:** 8081  
+**Repository:** [Transaction Service](https://github.com/DEEKSHITHA-K/transaction-svc)
 
 ---
 
 ### 2. **user-prompt-to-api-svc** (LLM Gateway Service)
+
 A Spring Boot microservice that bridges natural language with API calls using OpenAI's GPT models.
 
 **Key Features:**
@@ -100,121 +100,17 @@ A Spring Boot microservice that bridges natural language with API calls using Op
 - Orchestrates multi-step workflows: NL Query → LLM Translation → API Execution
 - Validates and constrains API calls to authorized endpoints
 
-**Endpoints:**
-- `POST /nl/ask` - Submit a natural language query
+**Endpoint:** `POST /nl/ask` - Submit a natural language query
 
-**Input Example:**
-```json
-"Show me my highest transaction"
-```
+**Example Flow:**
+1. Input: "Show me my highest transaction"
+2. LLMService converts to: `{"endpoint": "/transactions/highest", "method": "GET", "params": {"userId": "123"}}`
+3. ApiService executes the API call on downstream service
+4. Returns the result to client
 
-**Output Flow:**
-1. LLMService → OpenAI GPT-4o-mini converts to: `{"endpoint": "/transactions/highest", "method": "GET", "params": {"userId": "123"}}`
-2. ApiService → Executes the API call on downstream service
-3. Returns the result to client
-
-**Technologies:** Java 17, Spring Boot 4.0.5, Spring AI 2.0.0-M3, OpenAI GPT-4o-mini, Jackson, Lombok
-
-**Port:** 8080
-
-[User Prompt to API Service GitHub Repo Link](https://github.com/DEEKSHITHA-K/user-prompt-to-api-svc)
-
----
-
-## 🚀 Quick Start
-
-### Prerequisites
-- **Java 17** or higher
-- **Maven 3.6** or higher
-- **OpenAI API Key** (for user-prompt-to-api-svc-main)
-
-### Step 1: Start Transaction Service (Backend)
-
-```bash
-cd transaction-svc-master
-mvn clean install
-mvn spring-boot:run
-```
-
-The service starts on **http://localhost:8081**
-
-**Verify it's running:**
-```bash
-curl "http://localhost:8081/transactions/last5?userId=user123"
-```
-
----
-
-### Step 2: Configure OpenAI API Key
-
-Edit `user-prompt-to-api-svc-main/src/main/resources/application.properties`:
-
-```properties
-spring.ai.openai.api-key=YOUR_OPENAI_API_KEY
-```
-
----
-
-### Step 3: Start LLM Gateway Service
-
-```bash
-cd user-prompt-to-api-svc-main
-mvn clean install
-mvn spring-boot:run
-```
-
-The service starts on **http://localhost:8080**
-
----
-
-## 💬 Usage Examples
-
-### Using cURL
-
-**Request:**
-```bash
-curl -X POST http://localhost:8080/nl/ask \
-  -H "Content-Type: text/plain" \
-  -d "What are my last 5 transactions?"
-```
-
-**Flow:**
-1. NLController receives the query
-2. LLMService calls OpenAI with a system prompt
-3. OpenAI responds with: `{"endpoint": "/transactions/last5", "method": "GET", "params": {"userId": "123"}}`
-4. ApiService executes: `GET http://localhost:8081/transactions/last5?userId=123`
-5. Response is returned to client
-
-**Response:**
-```json
-[
-  {
-    "id": 1,
-    "userId": "user123",
-    "amount": 150.50,
-    "type": "CREDIT",
-    "timestamp": "2026-06-30T10:30:00"
-  },
-  {
-    "id": 2,
-    "userId": "user123",
-    "amount": 75.25,
-    "type": "DEBIT",
-    "timestamp": "2026-06-29T14:15:00"
-  }
-]
-```
-
-### Natural Language Query Examples
-
-Try these queries with the LLM Gateway:
-- "Show me my last 5 transactions"
-- "What is my highest transaction?"
-- "Get my recent transactions"
-- "Find my biggest transaction"
-- "Give me my transaction history"
-
-The LLM automatically maps these to the appropriate API endpoints.
+**Technologies:** Java 17, Spring Boot 4.0.5, Spring AI 2.0.0-M3, OpenAI GPT-4o-mini, Jackson, Lombok  
+**Port:** 8080  
+**Repository:** [User Prompt to API Service](https://github.com/DEEKSHITHA-K/user-prompt-to-api-svc)
 
 ---
 
@@ -252,11 +148,98 @@ OpenAI-with-Java/
 
 ---
 
-### Git Repo Links
-For the Spring Boot microservice that bridges natural language with API calls using OpenAI's GPT models.[User Prmpt to API Service](https://github.com/DEEKSHITHA-K/user-prompt-to-api-svc)
+## 🚀 Quick Start
 
-For the Spring Boot microservice providing REST APIs for transaction data queries [Transaction Service](https://github.com/DEEKSHITHA-K/transaction-svc)
+### Prerequisites
+- **Java 17** or higher
+- **Maven 3.6** or higher
+- **OpenAI API Key** (for user-prompt-to-api-svc-main)
 
+### Step 1: Start Transaction Service
+
+```bash
+cd transaction-svc-master
+mvn clean install
+mvn spring-boot:run
+```
+
+Service runs on **http://localhost:8081**
+
+**Verify it's running:**
+```bash
+curl "http://localhost:8081/transactions/last5?userId=user123"
+```
+
+### Step 2: Configure OpenAI API Key
+
+Edit `user-prompt-to-api-svc-main/src/main/resources/application.properties`:
+
+```properties
+spring.ai.openai.api-key=YOUR_OPENAI_API_KEY
+```
+
+### Step 3: Start LLM Gateway Service
+
+```bash
+cd user-prompt-to-api-svc-main
+mvn clean install
+mvn spring-boot:run
+```
+
+Service runs on **http://localhost:8080**
+
+---
+
+## 💬 Usage Examples
+
+### Test with cURL
+
+**Request:**
+```bash
+curl -X POST http://localhost:8080/nl/ask \
+  -H "Content-Type: text/plain" \
+  -d "What are my last 5 transactions?"
+```
+
+**Request Flow:**
+1. NLController receives the natural language query
+2. LLMService calls OpenAI to convert to structured API request
+3. OpenAI responds with: `{"endpoint": "/transactions/last5", "method": "GET", "params": {"userId": "123"}}`
+4. ApiService executes: `GET http://localhost:8081/transactions/last5?userId=123`
+5. Response is returned to client
+
+**Sample Response:**
+```json
+[
+  {
+    "id": 1,
+    "userId": "user123",
+    "amount": 150.50,
+    "type": "CREDIT",
+    "timestamp": "2026-06-30T10:30:00"
+  },
+  {
+    "id": 2,
+    "userId": "user123",
+    "amount": 75.25,
+    "type": "DEBIT",
+    "timestamp": "2026-06-29T14:15:00"
+  }
+]
+```
+
+### Natural Language Query Examples
+
+Try these queries with the LLM Gateway:
+- "Show me my last 5 transactions"
+- "What is my highest transaction?"
+- "Get my recent transactions"
+- "Find my biggest transaction"
+- "Give me my transaction history"
+
+The LLM automatically maps these to the appropriate API endpoints.
+
+---
 
 ## 🔌 Integration Flow (Detailed)
 
@@ -264,44 +247,40 @@ For the Spring Boot microservice providing REST APIs for transaction data querie
 
 ```
 1. CLIENT
-   POST /nl/ask
-   Body: "Show me my highest transaction"
-   ↓
+   POST /nl/ask with body: "Show me my highest transaction"
+   
 2. NLController.handleQuery()
    Receives the raw query string
-   ↓
+   
 3. NLService.processQuery()
    Delegates to LLMService
-   ↓
+   
 4. LLMService.translateToApi()
    Constructs system prompt with allowed endpoints
    Calls OpenAI GPT-4o-mini API
-   ↓
+   
 5. OpenAI Response:
    {
      "endpoint": "/transactions/highest",
      "method": "GET",
      "params": {"userId": "123"}
    }
-   ↓
+   
 6. NLService receives ApiRequest object
    Delegates to ApiService
-   ↓
+   
 7. ApiService.executeApi(apiRequest)
    Constructs URL: http://localhost:8081/transactions/highest?userId=123
    Makes HTTP GET request
-   ↓
+   
 8. transaction-svc-master
-   TransactionController receives GET /transactions/highest?userId=123
+   TransactionController receives request
    TransactionService finds highest transaction
    Returns Transaction object
-   ↓
-9. ApiService returns response to NLService
-   ↓
-10. NLService returns to NLController
-    ↓
-11. NLController returns to CLIENT
-    Response body: {"id": 5, "userId": "123", "amount": 500.00, ...}
+   
+9. Response flows back through: 
+   ApiService → NLService → NLController → CLIENT
+   Final response: {"id": 5, "userId": "123", "amount": 500.00, ...}
 ```
 
 ---
@@ -320,7 +299,7 @@ For the Spring Boot microservice providing REST APIs for transaction data querie
 
 ---
 
-## 🔧 Configuration Reference
+## 🔧 Configuration
 
 ### transaction-svc-master (Port 8081)
 
@@ -344,23 +323,16 @@ spring.h2.console.enabled=true
 
 **H2 Web Console:** http://localhost:8081/h2-console
 
----
-
 ### user-prompt-to-api-svc-main (Port 8080)
 
 ```properties
 # Server
 server.port=8080
 
-# H2 Database (optional for this service)
-spring.datasource.url=jdbc:h2:mem:testdb
-
 # OpenAI Integration
 spring.ai.openai.api-key=YOUR_OPENAI_API_KEY
 spring.ai.openai.chat.options.model=gpt-4o-mini
 ```
-
-**Important:** Set your OpenAI API key before running.
 
 ---
 
@@ -373,7 +345,7 @@ The LLMService enforces strict API constraints in the system prompt:
 - `GET /transactions/highest` (parameter: userId)
 
 **Safety Rules:**
-- ❌ No endpoints other than above are allowed
+- ❌ No unauthorized endpoints allowed
 - ❌ No `/users` endpoint access
 - ✅ User ID defaults to "123"
 - ✅ Response is always valid JSON
@@ -384,13 +356,15 @@ This prevents the LLM from generating unauthorized API calls.
 
 ## 🧪 Testing
 
-### Test Transaction Service
+### Using cURL
+
+**Test Transaction Service:**
 ```bash
 curl "http://localhost:8081/transactions/last5?userId=user123"
 curl "http://localhost:8081/transactions/highest?userId=user123"
 ```
 
-### Test LLM Gateway
+**Test LLM Gateway:**
 ```bash
 curl -X POST http://localhost:8080/nl/ask \
   -H "Content-Type: text/plain" \
@@ -432,17 +406,17 @@ curl -X POST http://localhost:8080/nl/ask \
 
 ---
 
-## 🔍 Debugging & Troubleshooting
+## 🔍 Troubleshooting
 
 ### Port Already in Use
 
-**Transaction Service (8081):**
+**Transaction Service:**
 ```properties
 # Edit transaction-svc-master/src/main/resources/application.properties
 server.port=8082
 ```
 
-**LLM Gateway (8080):**
+**LLM Gateway:**
 ```properties
 # Edit user-prompt-to-api-svc-main/src/main/resources/application.properties
 server.port=8081
@@ -453,27 +427,25 @@ server.port=8081
 1. Verify key is set in `application.properties`
 2. Check key has API access enabled at https://platform.openai.com
 3. Monitor usage to avoid rate limits
-4. Check OpenAI pricing - ensure account has credits
+4. Ensure account has credits
 
 ### H2 Database Not Showing Data
 
 - H2 is in-memory; data is recreated on restart
-- To persist: Change URL to `jdbc:h2:~/transaction-svc-data`
-- Or use PostgreSQL/MySQL for production
+- To persist data: Change URL to `jdbc:h2:~/transaction-svc-data`
+- Use PostgreSQL/MySQL for production environments
 
 ### LLM Gateway Returns Errors
 
-1. Ensure transaction-svc-master is running on port 8081
-2. Check OpenAI API key is valid
-3. Review LLM response in console logs
+1. Verify transaction-svc-master is running on port 8081
+2. Validate OpenAI API key
+3. Check console logs for LLM response details
 4. Verify network connectivity to `api.openai.com`
 
 ---
 
-## 📚 Additional Resources
+## 📚 Resources
 
-
-### External Links
 - [Spring Boot Documentation](https://spring.io/projects/spring-boot)
 - [Spring AI Documentation](https://spring.io/projects/spring-ai)
 - [Spring Data JPA](https://spring.io/projects/spring-data-jpa)
@@ -497,16 +469,15 @@ This project demonstrates:
 
 ---
 
-
 ## 🎉 Quick Reference Cheatsheet
 
 ```bash
-# Start Transaction Service (in terminal 1)
+# Terminal 1: Start Transaction Service
 cd transaction-svc-master
 mvn spring-boot:run
 # Runs on http://localhost:8081
 
-# Start LLM Gateway (in terminal 2)
+# Terminal 2: Start LLM Gateway
 cd user-prompt-to-api-svc-main
 mvn spring-boot:run
 # Runs on http://localhost:8080
@@ -520,14 +491,9 @@ curl -X POST http://localhost:8080/nl/ask \
   -H "Content-Type: text/plain" \
   -d "Show me my last 5 transactions"
 
-# Access H2 Console
+# Access H2 Consoles
 # Transaction DB: http://localhost:8081/h2-console
-# LLM Gateway DB: http://localhost:8080/h2-console
+# LLM Gateway DB: http://localhost:8080/h2-console (optional)
 ```
 
 ---
-
-
-
-
-
