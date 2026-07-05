@@ -70,7 +70,7 @@ HTTP GET /transactions/last5?userId=123
 
 ## 📦 Modules
 
-### 1. **transaction-svc-master** (Data Service)
+### 1. **transaction-svc** (Data Service)
 A Spring Boot microservice providing REST APIs for transaction data queries.
 
 **Key Features:**
@@ -87,9 +87,11 @@ A Spring Boot microservice providing REST APIs for transaction data queries.
 
 **Port:** 8081
 
+[Transaction Service Github Repo Link](https://github.com/DEEKSHITHA-K/transaction-svc)
+
 ---
 
-### 2. **user-prompt-to-api-svc-main** (LLM Gateway Service)
+### 2. **user-prompt-to-api-svc** (LLM Gateway Service)
 A Spring Boot microservice that bridges natural language with API calls using OpenAI's GPT models.
 
 **Key Features:**
@@ -114,6 +116,8 @@ A Spring Boot microservice that bridges natural language with API calls using Op
 **Technologies:** Java 17, Spring Boot 4.0.5, Spring AI 2.0.0-M3, OpenAI GPT-4o-mini, Jackson, Lombok
 
 **Port:** 8080
+
+[User Prmpt to API Service GitHub Repo Link](https://github.com/DEEKSHITHA-K/user-prompt-to-api-svc)
 
 ---
 
