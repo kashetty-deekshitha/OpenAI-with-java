@@ -117,7 +117,7 @@ A Spring Boot microservice that bridges natural language with API calls using Op
 
 **Port:** 8080
 
-[User Prmpt to API Service GitHub Repo Link](https://github.com/DEEKSHITHA-K/user-prompt-to-api-svc)
+[User Prompt to API Service GitHub Repo Link](https://github.com/DEEKSHITHA-K/user-prompt-to-api-svc)
 
 ---
 
