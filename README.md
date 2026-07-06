@@ -269,6 +269,6 @@ This prevents the LLM from generating unauthorized API calls.
 - [OpenAI API Reference](https://platform.openai.com/docs/api-reference)
 - [H2 Database](https://www.h2database.com)
 
----
+
 
 
