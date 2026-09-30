@@ -1,6 +1,6 @@
 # OpenAI-with-Java
 
-A comprehensive learning project demonstrating how to integrate OpenAI's GPT models with Java microservices using Spring Boot and Spring AI. This project showcases a complete end-to-end workflow: converting plain English questions into structured API calls.
+A comprehensive learning project demonstrating how to integrate OpenAI's GPT models with Java microservices using Spring Boot and Spring AI. This project showcases a complete end-to-end workflow: converting plain English questions into structured API calls. This is done as part of Lloyds Technology Centre - Kestrels Team Hackathon.
 
 ## 📋 Project Overview
 
@@ -271,4 +271,5 @@ This prevents the LLM from generating unauthorized API calls.
 
 
 
-
+## Contributors
+Kashetty Deekshitha, Naveen Valeti, Yojna Jain
